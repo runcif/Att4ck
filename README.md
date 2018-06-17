@@ -1,4 +1,4 @@
-# Att4ck find DRONE
+# Att4ck
 
 grep mac 
 ifconfig eth0 | grep -Eo '([[:xdigit:]]{1,2}[:-]){5}[[:xdigit:]]{1,2}' | head -n1
