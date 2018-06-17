@@ -3,6 +3,10 @@
 grep mac 
 ifconfig eth0 | grep -Eo '([[:xdigit:]]{1,2}[:-]){5}[[:xdigit:]]{1,2}' | head -n1
 
+
+https://github.com/jsh2134/iw_parse.git
+
+
 return mac vendor 
 <?php
   $mac_address = "FC:FB:FB:01:FA:21";
