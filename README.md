@@ -7,7 +7,7 @@ ifconfig eth0 | grep -Eo '([[:xdigit:]]{1,2}[:-]){5}[[:xdigit:]]{1,2}' | head -n
 https://github.com/jsh2134/iw_parse.git
 https://github.com/iancoleman/python-iwlist.git
 
-return mac vendor 
+return mac vendor https://macvendors.com/api
 <?php
   $mac_address = "FC:FB:FB:01:FA:21";
   $url = "http://api.macvendors.com/" . urlencode($mac_address);
