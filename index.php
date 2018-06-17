@@ -7,13 +7,13 @@
 <form method="post">
   <table
  style="width: 75%; text-align: center; margin-left: auto; margin-right: auto;"
- border="2" cellpadding="2" cellspacing="2">
+ border="0" cellpadding="2" cellspacing="2">
   <tbody>
     <tr>
-	    <td style="text-align: center;">Operazione su Drone</td>
+	    <td style="text-align: center;">Drone Recognize</td>
     </tr>
   <tr>
-    <td style="text-align: center;"><button name="cerca">Avvia la ricerca</button></td>
+    <td style="text-align: center;"><button name="cerca">Start</button></td>
   </tr>
  </tbody>
   </table>
@@ -26,16 +26,10 @@
 if (isset($_POST['cerca']))
 {
 		
-	exec("cd /usr/lib/cgi-bin && sudo iwlist wlan0 scan | iw_parse > result.txt", $output, $code);
+	exec("cd /usr/lib/cgi-bin && sudo iwlist wlan1 scan | iw_parse", $output, $code);
 	switch($code) {
-     case 0:
-
-    $filename = "/var/www/html/result.txt";
-    $handle = fopen($filename, "r");
-    $contents = fread($handle, filesize($filename));
-    fclose($handle);
-    
-    echo ""+$contents;
+    case 0:
+    echo $output;
     
      break;
    }
