@@ -1,5 +1,11 @@
 # Att4ck
 
+Operazioni preliminari:
+distro kali r4ven
+installa apache 
+installa aircrack-ng
+
+
 grep mac 
 ifconfig eth0 | grep -Eo '([[:xdigit:]]{1,2}[:-]){5}[[:xdigit:]]{1,2}' | head -n1
 
@@ -22,3 +28,4 @@ return mac vendor https://macvendors.com/api
   }
 ?>
 
+e poi una volta scovato (se vuoi farlo cadere) fai il deuth dei pacchetti verso il mac.
