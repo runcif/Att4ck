@@ -39,7 +39,8 @@ if (isset($_POST['mode']))
 
 <table style="width: 75%; text-align: center; margin-left: auto; margin-right: auto;"
  border="0" cellpadding="2" cellspacing="2">
-	    
+	<form method="post">
+
 	    <tr>
         <th>Nome scheda</th>
     </tr>
@@ -48,8 +49,7 @@ if (isset($_POST['mode']))
     
 
 <tr>
-	        <td> <a href="<?php echo "select_wlan.php?wlan=".$row;?>"><?php echo $row;?></a><td>
-
+			 	 	 <td style="text-align: center;"><button name="wlan"><?php echo $row;?></button></td>
 
     </tr>
     <?php endforeach;endif; ?>
@@ -60,5 +60,14 @@ if (isset($_POST['mode']))
      break;
    }
 }
+else if (isset($_POST['wlan']))
+{
+	exec("cd /usr/lib/cgi-bin && sudo airmon-ng ".$_POST['wlan'], $output, $code);
+	switch($code) {
+    case 0:
+    {
+	    echo $output;
+	    break;
+    }
+}
 ?>
-	
