@@ -70,4 +70,3 @@ else if (isset($_POST['wlan']))
 	    break;
     }
 }
-?>
