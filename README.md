@@ -9,6 +9,14 @@ installa aircrack-ng
 grep mac 
 ifconfig eth0 | grep -Eo '([[:xdigit:]]{1,2}[:-]){5}[[:xdigit:]]{1,2}' | head -n1
 
+Possibile utilizzo di wifijummer già testato su raspberry
+
+git clone https://github.com/secdev/scapy
+cd scapy
+sudo python setup.py install
+
+git clone https://github.com/DanMcInerney/wifijammer
+
 
 https://github.com/jsh2134/iw_parse.git
 https://github.com/iancoleman/python-iwlist.git
