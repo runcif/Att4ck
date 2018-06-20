@@ -23,6 +23,11 @@ git clone https://github.com/DanMcInerney/wifijammer
 https://github.com/jsh2134/iw_parse.git
 https://github.com/iancoleman/python-iwlist.git
 
+pip install csvfilter //importantissimo
+
+
+
+
 return mac vendor https://macvendors.com/api
 <?php
   $mac_address = "FC:FB:FB:01:FA:21";
