@@ -1,0 +1,2 @@
+csvfilter -f 0 /var/www/html/my-01.csv > /var/www/html/out.csv
+sudo rm -rf /var/www/html/my-01.csv
