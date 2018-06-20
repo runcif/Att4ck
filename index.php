@@ -117,15 +117,26 @@ fclose($myfile);
 	<form method="post">
     
     <?php foreach ($mac as $row): 
+	
 	    
-  $url = "https://api.macvendors.com/" . urlencode($row);
+  $url = "https://api.macvendors.com/v1/lookup/" . urlencode($row);
+  $text = "Accept: text/plain";
+  
+  $headers = array(
+    'Accept: text/plain',
+    'Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJtYWN2ZW5kb3JzIiwiZXhwIjoxODQ0MDI1MjE1LCJpYXQiOjE1Mjk1MjkyMTUsImlzcyI6Im1hY3ZlbmRvcnMiLCJqdGkiOiI0YTIyY2E2MS0zODRkLTRiODItOTdjOC1kNTdjMmRjOGZlNWEiLCJuYmYiOjE1Mjk1MjkyMTQsInN1YiI6IjQ3MSIsInR5cCI6ImFjY2VzcyJ9.hSFn7bLBCyxlui5_8SqhZe88yIB1bpVDf4vZEUBNLpLXygkW-0Xuyd2AnpOFFn4qFv-pVJAIZRDBPqojquGn7A'
+ );
+  
+    
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   $response = curl_exec($ch);
+  $drone = "";
   if($response) {
     $drone =  $response;
-  } else {
+  } else if ($response == '{"errors":{"detail":"Page not found"}}') {
     $drone = "Not Found";
   }
 	    
@@ -135,7 +146,7 @@ fclose($myfile);
 <tr>
 	 <td style="text-align: center;"><?php echo $row ?></td>
 	 <td style="text-align: center;"><?php echo $drone ?></td>
-
+     <td style="text-align: center;"><button name="seleziona">Seleziona</button></td>
     </tr>
     <?php endforeach;endif; ?>
 </table>
