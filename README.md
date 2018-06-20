@@ -9,6 +9,8 @@ installa aircrack-ng
 grep mac 
 ifconfig eth0 | grep -Eo '([[:xdigit:]]{1,2}[:-]){5}[[:xdigit:]]{1,2}' | head -n1
 
+deuth manuale https://oneguyoneblog.com/2017/01/12/wifi-jamming-wireless-kali-linux/
+
 Possibile utilizzo di wifijummer già testato su raspberry
 (https://dephace.com/how-to-disable-onboard-wifi-for-raspberry-pi-3/)
 git clone https://github.com/secdev/scapy
