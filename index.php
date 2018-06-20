@@ -24,11 +24,12 @@
 </html>
 
 <?php 
+session_start();
 
 if (isset($_POST['mode']))
 {
 		
-	exec("cd /usr/lib/cgi-bin && sudo airmon-ng | grep -Eo 'wlan[0-9]'", $output, $code);
+	exec("sudo airmon-ng | grep -Eo 'wlan[0-9]'", $output, $code);
 	switch($code) {
     case 0:
     
@@ -49,8 +50,8 @@ if (isset($_POST['mode']))
     
 
 <tr>
-			 	 	 <td style="text-align: center;"><button name="wlan"><?php echo $row;?></button></td>
-
+		<td style="text-align: center;"><button name="wlan"><?php echo $row;?></button></td>
+          <input type="hidden" name="testo" value="<?php echo $row;?>" />
     </tr>
     <?php endforeach;endif; ?>
 </table>
@@ -60,13 +61,87 @@ if (isset($_POST['mode']))
      break;
    }
 }
-else if (isset($_POST['wlan']))
+else if(isset($_POST['testo']))
 {
-	exec("cd /usr/lib/cgi-bin && sudo airmon-ng ".$_POST['wlan'], $output, $code);
+	?>
+	<table style="width: 75%; text-align: center; margin-left: auto; margin-right: auto;"
+ border="0" cellpadding="2" cellspacing="2">
+ 	 <tbody>
+		 	<tr>
+ 	<td style="text-align: center;">Hai selezionato l'interfaccia <?php echo $_POST['testo']; ?> ...</td>
+		 	</tr>
+ <?php
+	exec("sudo airmon-ng start ".$_POST['testo']." | grep -Eo 'wlan[0-9]mon'", $output, $code);
 	switch($code) {
-    case 0:
-    {
-	    echo $output;
+    case 0: 
+?>
+<tr>
+	 <td style="text-align: center;">L'interfaccia Monitor [<?php echo $output[0];?>] è stata abilitata...</td>
+	        </tr>  
+	        <tr>
+	 <td style="text-align: center;">Avvia la ricerca dei Droni nelle vicinanze!</td>
+	        </tr>  
+	         </tbody>
+     </table>
+ 
+<?php
+$_SESSION['wlan'] = $output[0];
+
+
 	    break;
     }
+}
+else if(isset($_POST['start']))
+{
+	echo "".$_SESSION['wlan'];
+	exec("sudo timeout 5 airodump-ng -w /var/www/html/my --output-format csv --write-interval 1 wlan1mon",   $output, $code);
+     
+    if($output>0) :
+     exec("sudo /var/www/html/converti",$output,$code);
+
+$mac = array();
+$myfile = fopen("/var/www/html/out.csv", "r") or die("Non riesco a vedere nessun drone!");
+// Output one character until end-of-file
+while(!feof($myfile)) {
+
+		   $mac[] = fgets($myfile); 
+
+}
+fclose($myfile);  
+
+  
+    ?>
+
+<table style="width: 75%; text-align: center; margin-left: auto; margin-right: auto;"
+ border="0" cellpadding="2" cellspacing="2">
+	<form method="post">
+    
+    <?php foreach ($mac as $row): 
+	    
+  $url = "https://api.macvendors.com/" . urlencode($row);
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  $response = curl_exec($ch);
+  if($response) {
+    $drone =  $response;
+  } else {
+    $drone = "Not Found";
+  }
+	    
+    ?>
+ 	    
+
+<tr>
+	 <td style="text-align: center;"><?php echo $row ?></td>
+	 <td style="text-align: center;"><?php echo $drone ?></td>
+
+    </tr>
+    <?php endforeach;endif; ?>
+</table>
+    
+    <?php 
+    
+
+
 }
