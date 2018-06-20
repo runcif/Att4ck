@@ -10,7 +10,7 @@ grep mac
 ifconfig eth0 | grep -Eo '([[:xdigit:]]{1,2}[:-]){5}[[:xdigit:]]{1,2}' | head -n1
 
 Possibile utilizzo di wifijummer già testato su raspberry
-
+(https://dephace.com/how-to-disable-onboard-wifi-for-raspberry-pi-3/)
 git clone https://github.com/secdev/scapy
 cd scapy
 sudo python setup.py install
