@@ -109,6 +109,26 @@ while(!feof($myfile)) {
 }
 fclose($myfile);  
 
+for ($i = 0, $n = count($mac) ; $i < $n ; $i++)
+	
+	{	 
+    $findme = 'BSSID';
+    $findme2 = 'Station MAC';
+
+    $pos = strpos($mac[$i], $findme);
+    $pos2 = strpos($mac[$i], $findme2);
+
+   
+  if($pos !== false)  
+    {
+    unset($mac[$i]);	
+	} 
+  else if($pos2 !== false)  
+ { 
+    unset($mac[$i]);	
+}
+	} 
+  
   
     ?>
 
@@ -118,6 +138,7 @@ fclose($myfile);
     
     <?php foreach ($mac as $row): 
 	
+
 	    
   $url = "https://api.macvendors.com/v1/lookup/" . urlencode($row);
   $text = "Accept: text/plain";
@@ -132,12 +153,14 @@ fclose($myfile);
   curl_setopt($ch, CURLOPT_URL, $url);
   curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  $response = curl_exec($ch);
-  $drone = "";
-  if($response) {
-    $drone =  $response;
-  } else if ($response == '{"errors":{"detail":"Page not found"}}') {
-    $drone = "Not Found";
+  $drone = '<span style="color:#0000ff;text-align:center;">' . curl_exec($ch) . '</span>';
+        
+    $findme = 'errors';
+    $pos = strpos($drone, $findme);
+   
+  if($pos !== false)
+  {
+    $drone =  '<span style="color:#ff0000;text-align:center;">MAC non riconosciuto!</span>';
   }
 	    
     ?>
