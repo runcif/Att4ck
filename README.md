@@ -1,20 +1,5 @@
 # Att4ck
 
-<<<<<<< .mine
-||||||| .r20
-Operazioni preliminari:
-distro kali r4ven
-installa apache 
-installa aircrack-ng
-
-
-=======
-Operazioni preliminari:
-distro kali r4ven
-installa apache 
-update-rc.d apache2 enable
-
->>>>>>> .r25
 grep mac 
 ifconfig eth0 | grep -Eo '([[:xdigit:]]{1,2}[:-]){5}[[:xdigit:]]{1,2}' | head -n1
 

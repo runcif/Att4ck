@@ -25,10 +25,11 @@ else
   <tbody>
   <tr>
 	<td style="text-align: center;"><button name="mode">Avvia il Monitor Mode [<?php echo $wwlan?>]</button></td>
-			<td style="text-align: center;"><button name="reset">Reset Moduli</button></td>
+	<td style="text-align: center;"><button name="reset">Reset Moduli</button></td>
   </tr>
 	<tr>
     <td style="text-align: center;"><button name="start">Avvia Ricerca Drone</button></td>
+    <td style="text-align: center;"><button name="reboot">Riavvia Att4ck</button></td>
 	</tr>
 	<tr>
     <td style="text-align: center;"><button name="deuth">Attaca Drone/Pilota</button></td>
@@ -45,6 +46,12 @@ if (isset($_POST['reset']))
 {
   session_destroy();
 header('Refresh: 3; url=index.php');
+
+}
+else if (isset($_POST['reboot']))
+{
+  session_destroy();
+  exec("sudo reboot", $output, $code);
 
 }
 
@@ -205,15 +212,40 @@ for ($i = 0, $n = count($mac) ; $i < $n ; $i++)
     ?>
  	    
 	 <td style="text-align: center;"><?php echo $drone ?></td>
-     <td style="text-align: center;"><button name="seleziona">Seleziona</button></td>
+     <td style="text-align: center;"><button name="selmac">Seleziona</button></td>
+               <input type="hidden" name="selmac" value="<?php echo $row;?>" />
 
     </tr>
     <?php }endforeach;endif; ?>
 </table>
-    
+    </form>
     <?php 
     
 
 
 }
 }
+else if(isset($_POST['selmac']))
+{
+	$_SESSION["mac"] = $_POST['selmac'];
+	
+
+
+	?>
+	<table style="width: 75%; text-align: center; margin-left: auto; margin-right: auto;"
+ border="0" cellpadding="2" cellspacing="2">
+	 
+ 	 <tbody>
+		 	<tr>
+ 	         <td style="text-align: center;">Hai selezionato: <?php echo $_SESSION["mac"] ?></td>
+ 	         <td style="text-align: center;">Inizia l'attacco...tra poco cadrà!</td>
+ 	         <?php
+	 	         	exec("cd /var/www/html/wifijammer && sudo python wifijammer -a " . $_SESSION["mac"] . " -i ".$_SESSION["wlan"]. " -t .00001", $output, $code);
+	 	         	?>
+		 	</tr>
+	         </tbody>
+     </table>
+<?php
+
+}
+?>
