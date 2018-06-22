@@ -3,8 +3,7 @@
 Operazioni preliminari:
 distro kali r4ven
 installa apache 
-installa aircrack-ng
-
+update-rc.d apache2 enable
 
 grep mac 
 ifconfig eth0 | grep -Eo '([[:xdigit:]]{1,2}[:-]){5}[[:xdigit:]]{1,2}' | head -n1
