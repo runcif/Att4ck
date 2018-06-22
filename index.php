@@ -25,13 +25,13 @@ else
   <tbody>
   <tr>
 	<td style="text-align: center;"><button name="mode">Avvia il Monitor Mode [<?php echo $wwlan?>]</button></td>
-			<td style="text-align: center;"><button name="reset">Resetta interfaccia</button></td>
+			<td style="text-align: center;"><button name="reset">Reset Moduli</button></td>
   </tr>
 	<tr>
     <td style="text-align: center;"><button name="start">Avvia Ricerca Drone</button></td>
 	</tr>
 	<tr>
-    <td style="text-align: center;"><button name="deuth">Distruggi il Drone</button></td>
+    <td style="text-align: center;"><button name="deuth">Attaca Drone/Pilota</button></td>
   </tr>
  </tbody>
   </table>
@@ -172,8 +172,7 @@ for ($i = 0, $n = count($mac) ; $i < $n ; $i++)
 	<form method="post">
     
     <?php foreach ($mac as $row): 
-	
-
+?> 	<tr> <td style="text-align: center;"><?php echo $row ?></td> <?php
 	    
   $url = "https://api.macvendors.com/v1/lookup/" . urlencode($row);
   $text = "Accept: text/plain";
@@ -193,20 +192,23 @@ for ($i = 0, $n = count($mac) ; $i < $n ; $i++)
     $findme = 'errors';
     $pos = strpos($drone, $findme);
    
+   
+   
   if($pos !== false)
   {
     $drone =  '';//'<span style="color:#ff0000;text-align:center;">MAC non riconosciuto!</span>';
   }
+  else
+  {
+  
 	    
     ?>
  	    
-
-<tr>
-	 <td style="text-align: center;"><?php echo $row ?></td>
 	 <td style="text-align: center;"><?php echo $drone ?></td>
      <td style="text-align: center;"><button name="seleziona">Seleziona</button></td>
+
     </tr>
-    <?php endforeach;endif; ?>
+    <?php }endforeach;endif; ?>
 </table>
     
     <?php 
