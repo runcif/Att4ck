@@ -237,8 +237,7 @@ else if(isset($_POST['selmac']))
 	 
  	 <tbody>
 		 	<tr>
- 	         <td style="text-align: center;">Hai selezionato: <?php echo $_SESSION["mac"] ?></td>
- 	         <td style="text-align: center;">Inizia l'attacco!!</td>
+ 	         <td style="text-align: center;">Hai selezionato: <?php echo $_SESSION["mac"] ?>, comincia l'attacco!!</td>
 		 	</tr>
 	         </tbody>
      </table>

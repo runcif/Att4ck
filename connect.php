@@ -1,12 +1,12 @@
 <?php
-$servername = "localhost";
+$servername = "dojode.ddns.net";
 $username = "runcif";
 $password = "att4ck";
 $dbname = "att4ck";
 
 try
 {
-$conn =  new PDO("mysql:host=127.0.0.1;dbname=$dbname", $username, $password);
+$conn =  new PDO("mysql:host=dojode.ddns.net;dbname=$dbname", $username, $password);
 
 }
 catch(PDOException $e)
