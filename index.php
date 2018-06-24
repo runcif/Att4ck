@@ -57,7 +57,7 @@ else if (isset($_POST['reboot']))
 
 else if (isset($_POST['mode']))
 {
-	exec("sudo airmon-ng | grep -Eo 'wlan[0-9]'", $output, $code);
+	exec("cd /usr/lib/cgi-bin && sudo airmon-ng | grep -Eo 'wlan[0-9]'", $output, $code);
 	switch($code) {
     case 0:
     
@@ -99,7 +99,7 @@ else if(isset($_POST['testo']))
  	<td style="text-align: center;">Hai selezionato l'interfaccia <?php echo $_POST['testo']; ?> ...</td>
 		 	</tr>
  <?php
-	exec("sudo airmon-ng start ".$_POST['testo']." | grep -Eo 'wlan[0-9]mon'", $output, $code);
+	exec("cd /usr/lib/cgi-bin && sudo airmon-ng start ".$_POST['testo']." | grep -Eo 'wlan[0-9]mon'", $output, $code);
 	switch($code) {
     case 0: 
 ?>
@@ -130,7 +130,7 @@ if(!isset($_SESSION["wlan"]))
 }
 else
 {
-	exec("sudo timeout 5 airodump-ng -w /var/www/html/my --output-format csv --write-interval 1 wlan1mon",   $output, $code);
+	exec("sudo timeout --foreground 5 airodump-ng -w /var/www/html/my --output-format csv --write-interval 1 wlan1mon",  $output, $code);
      
     if($output>0) :
      exec("sudo /var/www/html/converti",$output,$code);
