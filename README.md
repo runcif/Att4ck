@@ -16,6 +16,10 @@ git clone https://github.com/codeinthehole/csvfilter.git
 
 sudo apt-get install php-curl
 
+https://github.com/DanMcInerney/wifijammer.git
+sudo python setup.py install
+
+
 return mac vendor https://macvendors.com/api
 <?php
   $mac_address = "FC:FB:FB:01:FA:21";
