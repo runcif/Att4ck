@@ -3,14 +3,16 @@
 grep mac 
 ifconfig eth0 | grep -Eo '([[:xdigit:]]{1,2}[:-]){5}[[:xdigit:]]{1,2}' | head -n1
 
+sudo apt-get install apache2
+sudo apt-get install php libapache2-mod-php php-mcrypt php-mysql
 
-https://github.com/jsh2134/iw_parse.git
-https://github.com/iancoleman/python-iwlist.git
 
+sudo pico /etc/sudoers
+www-data ALL=(ALL) NOPASSWD:ALL
 
-sudo apt-get install python-pip python-dev build-essential
+sudo apt-get install git python-pip python-dev build-essential
 pip install csvfiter
-https://github.com/codeinthehole/csvfilter.git
+git clone https://github.com/codeinthehole/csvfilter.git
 
 sudo apt-get install php-curl
 
