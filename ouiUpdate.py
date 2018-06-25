@@ -19,9 +19,9 @@ OUI_URL = "http://standards.ieee.org/develop/regauth/oui/oui.txt"
 OUI_FILE = "oui.txt"
 
 # Database Related Globals
-DB_NAME='myDB'
-DB_USERNAME='user'
-DB_PASSWORD='password'
+DB_NAME='att4ck'
+DB_USERNAME='runcif'
+DB_PASSWORD='att4ck'
 DB_TABLE='ouiList'
 DB_HOST='localhost'
 
@@ -32,7 +32,7 @@ def main():
 	#
     # Download oui.txt  Comment out the two lines below if you do not want to download the file and use a offline copy
 	#####
-	#print "Downloading ",OUI_URL
+	#print "Scarico il database dei Vendor ",OUI_URL
 	#urllib.urlretrieve(OUI_URL, OUI_FILE)
     #####
     ##connect to db
@@ -41,7 +41,7 @@ def main():
 		DB = MySQLdb.connect(host=DB_HOST, user=DB_USERNAME, passwd=DB_PASSWORD, db=DB_NAME) 
 		DB_CURSOR = DB.cursor()
 	except:
-		sys.exit('Unable to Open Connection to Database')
+		sys.exit('Non riesco a connettermi al DataBase, controlla!')
 	
 	# Drop table and start from new
 	DB_CURSOR.execute("DROP TABLE IF EXISTS ouiList")
@@ -57,9 +57,9 @@ def main():
 	DB_CURSOR.execute(sql)
 		
 	# parsing oui.txt data and adding to table
-	print "Parsing data..."
+	print "Recupero informazioni..."
 	with open(OUI_FILE) as infile:
-		print "Inserting data into table, please wait..."
+		print "Inserisco le informazioni nel database, attendi..."
 		for line in infile:
 			#do_something_with(line)
 			if re.search("(hex)", line):
@@ -82,16 +82,16 @@ def main():
 						DB.commit()
 					except Exception, e:
 						DB.rollback()
-						print "Not inserted because error: "
+						print "Non inserito, l'errore è: "
 	
 	# count the number of lines in the table
 	sql = ("SELECT count(id) FROM ouiList WHERE 1")
 	DB_CURSOR.execute(sql)
 	result = DB_CURSOR.fetchone()
 	if result:
-		print 'Completed: Total lines in table is: {0}'.format(result[0])
+		print 'Completato: Linee totali nella tabella: {0}'.format(result[0])
 	else:	
-		print "Unable to count lines in table"
+		print "Non riesco a conteggiare le linee nel database -.-"
 	
 	infile.close()
 	DB_CURSOR.close()
