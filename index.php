@@ -130,7 +130,7 @@ if(!isset($_SESSION["wlan"]))
 }
 else
 {
-	exec("sudo timeout --foreground 5 airodump-ng -w /var/www/html/my --output-format csv --write-interval 1 wlan1mon",  $output, $code);
+	exec("sudo timeout --foreground 5 airodump-ng -w /var/www/html/my --output-format csv --write-interval 1 ".$_SESSION["wlan"]. "",  $output, $code);
      
     if($output>0) :
      exec("sudo /var/www/html/converti",$output,$code);
