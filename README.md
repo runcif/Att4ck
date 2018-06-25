@@ -19,6 +19,7 @@ sudo apt-get install php-curl
 https://github.com/DanMcInerney/wifijammer.git
 sudo python setup.py install
 
+sudo apt-get install python-mysqldb
 
 return mac vendor https://macvendors.com/api
 <?php
