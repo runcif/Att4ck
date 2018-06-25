@@ -18,29 +18,10 @@ catch(PDOException $e)
 }
 
 
-function get_mac($conn){
-
-$sql    = "SELECT * FROM drone";
- $result = $conn->prepare($sql);
-        $result->execute();
-   return $result; 
-
-
-}
-
-function set_drone($output,$conn){
-
-$query = "INSERT INTO drone (drone_name, mac_add) VALUES
-            ('$output[0]', '$output[1]')";
-
-$result = $conn->prepare($query);
-$result->execute();
-
-}
 
 function check_drone($mac,$conn){
 
-$sql    = "SELECT * FROM drone WHERE mac_add = ".$mac;
+$sql    = "SELECT * FROM ouiList WHERE oui = ".$mac;
  $result = $conn->prepare($sql);
         $result->execute();
    return $result; 
