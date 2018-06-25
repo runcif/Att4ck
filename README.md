@@ -6,7 +6,6 @@ ifconfig eth0 | grep -Eo '([[:xdigit:]]{1,2}[:-]){5}[[:xdigit:]]{1,2}' | head -n
 sudo apt-get install apache2
 sudo apt-get install php libapache2-mod-php php-mcrypt php-mysql
 
-
 sudo pico /etc/sudoers
 www-data ALL=(ALL) NOPASSWD:ALL
 
