@@ -82,7 +82,7 @@ def main():
 						DB.commit()
 					except Exception, e:
 						DB.rollback()
-						print "Non inserito, l'errore è: "
+						print "Non inserito, l'errore e': "
 	
 	# count the number of lines in the table
 	sql = ("SELECT count(id) FROM ouiList WHERE 1")
