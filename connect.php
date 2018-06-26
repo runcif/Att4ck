@@ -21,10 +21,10 @@ catch(PDOException $e)
 
 function check_drone($mac,$conn){
 
-$sql    = "SELECT * FROM ouiList WHERE oui = ".$mac;
+$sql    = "SELECT vendor FROM ouiList WHERE oui LIKE '%".$mac."%'";
  $result = $conn->prepare($sql);
         $result->execute();
-   return $result; 
+   return $result->fetch(); 
 
 }
 

@@ -147,6 +147,8 @@ while(!feof($myfile)) {
 }
 fclose($myfile);  
 }
+
+
 for ($i = 0, $n = count($mac) ; $i < $n ; $i++)
 	
 	{	 
@@ -170,42 +172,38 @@ for ($i = 0, $n = count($mac) ; $i < $n ; $i++)
 
 }
 
-} 
-	
-  
-  
-    ?>
+   ?>
 
 <table style="width: 75%; text-align: center; margin-left: auto; margin-right: auto;"
  border="0" cellpadding="2" cellspacing="2">
 	<form method="post">
     
-    <?php foreach ($mac as $row){
-?> 	<tr> <td style="text-align: center;"><?php echo $row ?></td> <?php
-	
-	$mac_frame = explode(':',$row);
-	
-	 $res = check_drone($mac_frame[0].":".$mac_frame[1].":".$mac_frame[2],$conn);
-	   
-if($res->rowCount()>0) 
- {
-   foreach ($res as $vendor){ 
-
-   $drone = '<span style="color:#0000ff;text-align:center;">' . $vendor["vendor"] . '</span>';
-        	    
-    ?>
- 	    
-	 <td style="text-align: center;"><?php echo $drone; ?></td>
+<?php 	
+	$mac_split = str_split($mac[$i],8);
+	$return = $mac_split[0];
+		
+	 $res = check_drone($return,$conn);
+     
+     if($res[0]!=='') 
+     {
+	   ?>
+ 	 <tr> <td style="text-align: center;"><?php echo $mac[$i]; ?></td> 
+	 <td style="text-align: center;"><?php echo '<span style="color:#800000;text-align:center;">'.$res[0].'</span>'; ?></td>
      <td style="text-align: center;"><button name="selmac">Seleziona</button></td>
-               <input type="hidden" name="selmac" value="<?php echo $drone;?>" />
+               <input type="hidden" name="selmac" value="<?php echo $mac[$i];?>" />
 
     </tr>
 </table>
     </form>
 <?php
 }
-}
-}
+
+
+
+} 
+	
+  
+
 
 }
 }    
