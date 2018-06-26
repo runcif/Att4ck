@@ -130,9 +130,11 @@ if(!isset($_SESSION["wlan"]))
 }
 else
 {
+	include("connect.php");
+	
 	exec("sudo timeout --foreground 5 airodump-ng -w /var/www/html/my --output-format csv --write-interval 1 ".$_SESSION["wlan"]. "",  $output, $code);
      
-    if($output>0) :
+    if($output>0) {
      exec("sudo /var/www/html/converti",$output,$code);
 
 $mac = array();
@@ -144,7 +146,7 @@ while(!feof($myfile)) {
 
 }
 fclose($myfile);  
-
+}
 for ($i = 0, $n = count($mac) ; $i < $n ; $i++)
 	
 	{	 
@@ -178,53 +180,33 @@ for ($i = 0, $n = count($mac) ; $i < $n ; $i++)
  border="0" cellpadding="2" cellspacing="2">
 	<form method="post">
     
-    <?php foreach ($mac as $row): 
+    <?php foreach ($mac as $row){
 ?> 	<tr> <td style="text-align: center;"><?php echo $row ?></td> <?php
-	    
-  $url = "https://api.macvendors.com/v1/lookup/" . urlencode($row);
-  $text = "Accept: text/plain";
-  
-  $headers = array(
-    'Accept: text/plain',
-    'Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJtYWN2ZW5kb3JzIiwiZXhwIjoxODQ0MDI1MjE1LCJpYXQiOjE1Mjk1MjkyMTUsImlzcyI6Im1hY3ZlbmRvcnMiLCJqdGkiOiI0YTIyY2E2MS0zODRkLTRiODItOTdjOC1kNTdjMmRjOGZlNWEiLCJuYmYiOjE1Mjk1MjkyMTQsInN1YiI6IjQ3MSIsInR5cCI6ImFjY2VzcyJ9.hSFn7bLBCyxlui5_8SqhZe88yIB1bpVDf4vZEUBNLpLXygkW-0Xuyd2AnpOFFn4qFv-pVJAIZRDBPqojquGn7A'
- );
-  
-    
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $url);
-  curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  $drone = '<span style="color:#0000ff;text-align:center;">' . curl_exec($ch) . '</span>';
-        
-    $findme = 'errors';
-    $pos = strpos($drone, $findme);
-   
-   
-   
-  if($pos !== false)
-  {
-    $drone =  '';//'<span style="color:#ff0000;text-align:center;">MAC non riconosciuto!</span>';
-  }
-  else
-  {
-  
-	    
+	
+	 $res = check_drone($row,$conn);
+	   
+if($res->rowCount()>0) 
+ {
+   foreach ($res as $vendor){ 
+
+   $drone = '<span style="color:#0000ff;text-align:center;">' . $vendor["vendor"] . '</span>';
+        	    
     ?>
  	    
-	 <td style="text-align: center;"><?php echo $drone ?></td>
+	 <td style="text-align: center;"><?php echo $drone; ?></td>
      <td style="text-align: center;"><button name="selmac">Seleziona</button></td>
-               <input type="hidden" name="selmac" value="<?php echo $row;?>" />
+               <input type="hidden" name="selmac" value="<?php echo $drone;?>" />
 
     </tr>
-    <?php }endforeach;endif; ?>
 </table>
     </form>
-    <?php 
-    
-
-
+<?php
 }
 }
+}
+
+}
+}    
 else if(isset($_POST['selmac']))
 {
 	$_SESSION["mac"] = $_POST['selmac'];
@@ -255,4 +237,5 @@ else
 exec("cd /var/www/html/wifijammer && sudo python wifijammer -a " . $_SESSION["mac"] . " -i ".$_SESSION["wlan"]. " -t .00001", $output, $code);
 	}
 }
+
 ?>
