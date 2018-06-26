@@ -57,7 +57,7 @@ else if (isset($_POST['reboot']))
 
 else if (isset($_POST['mode']))
 {
-	exec("cd /usr/lib/cgi-bin && sudo airmon-ng | grep -Eo 'wlan[0-9]'", $output, $code);
+	exec("cd /usr/lib/cgi-bin && sudo airmon-ng | grep -Eo 'wlan[1-9]'", $output, $code);
 	switch($code) {
     case 0:
     
@@ -183,7 +183,9 @@ for ($i = 0, $n = count($mac) ; $i < $n ; $i++)
     <?php foreach ($mac as $row){
 ?> 	<tr> <td style="text-align: center;"><?php echo $row ?></td> <?php
 	
-	 $res = check_drone($row,$conn);
+	$mac_frame = explode(':',$row);
+	
+	 $res = check_drone($mac_frame[0].":".$mac_frame[1].":".$mac_frame[2],$conn);
 	   
 if($res->rowCount()>0) 
  {
