@@ -33,6 +33,8 @@ else
 	</tr>
 	<tr>
     <td style="text-align: center;"><button name="deuth">Attaca Drone/Pilota</button></td>
+        <td style="text-align: center;"><button name="setdrone">Imposta (mac) come Drone</button></td>
+
   </tr>
  </tbody>
   </table>
@@ -54,7 +56,19 @@ else if (isset($_POST['reboot']))
   exec("sudo reboot", $output, $code);
 
 }
-
+else if (isset($_POST['setdrone']))
+{
+	if(!isset($_SESSION["mac3"]))
+{
+?>		 <center><td style="text-align: center;">Avvia, prima, il monitor mode e cerca un Drone/Pilota e seleziona il MAC!</td></center>
+<?php
+}
+else
+{
+include("connect.php");
+set_drone($_SESSION["mac3"],$conn);
+}
+}
 else if (isset($_POST['mode']))
 {
 	exec("cd /usr/lib/cgi-bin && sudo airmon-ng | grep -Eo 'wlan[1-9]'", $output, $code);
@@ -149,9 +163,10 @@ fclose($myfile);
 }
 
 
-for ($i = 0, $n = count($mac) ; $i < $n ; $i++)
-	
+for ($i = 0, $n = count($mac) ; $i < $n ; $i++)	
 	{	 
+				
+		
     $findme = 'BSSID';
     $findme2 = 'Station MAC';
 
@@ -179,17 +194,38 @@ for ($i = 0, $n = count($mac) ; $i < $n ; $i++)
 	<form method="post">
     
 <?php 	
-	$mac_split = str_split($mac[$i],8);
+	$mac_split = str_split($mac[$i],8); 
 	$return = $mac_split[0];
 		
-	 $res = check_drone($return,$conn);
+	 $res = check_vendor($return,$conn);
+     $drone = check_drone($return,$conn);
      
      if($res[0]!=='') 
      {
-	   ?>
+	   ?> 
  	 <tr> <td style="text-align: center;"><?php echo $mac[$i]; ?></td> 
-	 <td style="text-align: center;"><?php echo '<span style="color:#800000;text-align:center;">'.$res[0].'</span>'; ?></td>
-     <td style="text-align: center;"><button name="selmac">Seleziona</button></td>
+ 	 <?php
+	 	if($res["vendor"] !== null) 
+ 	 {
+	 	 if($drone[0] == 1){
+		 	?> 
+		 	 	
+		 	 		<tr> <td style="text-align: center;"><?php echo '<span style="color:#ff0000;text-align:center;">'.$res["vendor"].'</span>'; ?></td></tr>
+		 	 		<tr> <td style="text-align: center;"><?php echo '<span style="color:#ff0000;text-align:center;"> DRONE TROVATO!</span>'; ?></td></tr>
+		 	 	  <tr> <td style="text-align: center;"><button name="selmac">Attacca!</button></td></tr>
+               <input type="hidden" name="selmac" value="<?php echo $mac[$i];?>" />
+
+    </tr>
+</table>
+    </form>
+
+		 	 <?php
+		 	 }
+		 	 else
+		 	 {
+ 	 ?>
+	<tr> <td style="text-align: center;"><?php echo '<span style="color:#0066ff;text-align:center;">'.$res["vendor"].'</span>'; ?></td></tr>
+    <tr> <td style="text-align: center;"><button name="selmac">Seleziona</button></td></tr>
                <input type="hidden" name="selmac" value="<?php echo $mac[$i];?>" />
 
     </tr>
@@ -197,7 +233,21 @@ for ($i = 0, $n = count($mac) ; $i < $n ; $i++)
     </form>
 <?php
 }
+}
+else
+{
+	 if($pos !== false && $pos2 !== false)  
+    {
+	?>
+	<tr> <td style="text-align: center;"><?php echo '<span style="color:#cc00cc;text-align:center;">Non rilevo il vendor!</span>'; ?></td></tr>
+    </tr>
+</table>
+    </form>
+<?php	
+	}
+}
 
+}
 
 
 } 
@@ -210,7 +260,11 @@ for ($i = 0, $n = count($mac) ; $i < $n ; $i++)
 else if(isset($_POST['selmac']))
 {
 	$_SESSION["mac"] = $_POST['selmac'];
-	
+    
+    $mac_split = str_split($_POST['selmac'],8); 
+	$mac3 = $mac_split[0];
+    
+    $_SESSION["mac3"] = $mac3;	
 
 
 	?>
