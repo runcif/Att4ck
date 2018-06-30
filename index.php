@@ -286,10 +286,15 @@ if(!isset($_SESSION["mac"]))
 }
 else
 {
+	$macc = $_SESSION["mac"];
+
+$text = str_replace('?', '', $macc);
 
 
-exec("sudo /var/www/html/wifijammer/wifijammer -a 8C:F5:A3:D5:1F:18", $output, $code);
-
+$execute = ('sudo /var/www/html/wifijammer/wifijammer -a "'.$text.'"');
+exec($execute,$output);
+print_r ($output)."<br />";
+echo $execute;
 
 
 	}
