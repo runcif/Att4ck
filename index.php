@@ -236,15 +236,13 @@ for ($i = 0, $n = count($mac) ; $i < $n ; $i++)
 }
 else
 {
-	 if($pos !== false && $pos2 !== false)  
-    {
 	?>
 	<tr> <td style="text-align: center;"><?php echo '<span style="color:#cc00cc;text-align:center;">Non rilevo il vendor!</span>'; ?></td></tr>
     </tr>
 </table>
     </form>
 <?php	
-	}
+	
 }
 
 }
@@ -288,7 +286,12 @@ if(!isset($_SESSION["mac"]))
 }
 else
 {
-exec("cd /var/www/html/wifijammer && sudo python wifijammer -a " . $_SESSION["mac"] . " -i ".$_SESSION["wlan"]. " -t .00001", $output, $code);
+
+
+exec("sudo /var/www/html/wifijammer/wifijammer -a 8C:F5:A3:D5:1F:18", $output, $code);
+
+
+
 	}
 }
 
