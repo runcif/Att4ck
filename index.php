@@ -292,7 +292,19 @@ else
 
 $mac_split = str_split($_SESSION["mac"],17); 
 
-echo shell_exec('sudo /var/www/html/wifijammer/wifijammer -a "'.$mac_split[0].'"');
+$attacco = shell_exec('sudo /var/www/html/wifijammer/wifijammer -a "'.$mac_split[0].'"');
+?>
+
+	<table style="width: 75%; text-align: center; margin-left: auto; margin-right: auto;"
+ border="0" cellpadding="2" cellspacing="2"> 
+	  <tbody>
+		 	<tr>
+ 	         <td style="text-align: center;"><?php echo $attacco;?></td>
+		 	</tr>
+	         </tbody>
+     </table>
+<?php
+
 
 	}
 }
