@@ -257,8 +257,11 @@ else
 }    
 else if(isset($_POST['selmac']))
 {
+	
 	$_SESSION["mac"] = $_POST['selmac'];
     
+    
+    //server ad impostare il mac nel database qualora il drone non venisse rilevato
     $mac_split = str_split($_POST['selmac'],8); 
 	$mac3 = $mac_split[0];
     
@@ -271,7 +274,7 @@ else if(isset($_POST['selmac']))
 	 
  	 <tbody>
 		 	<tr>
- 	         <td style="text-align: center;">Hai selezionato: <?php echo $_SESSION["mac"] ?>, comincia l'attacco!!</td>
+ 	         <td style="text-align: center;">Hai selezionato: <?php echo $_SESSION["mac"];?>, comincia l'attacco!!</td>
 		 	</tr>
 	         </tbody>
      </table>
@@ -286,16 +289,10 @@ if(!isset($_SESSION["mac"]))
 }
 else
 {
-	$macc = $_SESSION["mac"];
 
-$text = str_replace('?', '', $macc);
+$mac_split = str_split($_SESSION["mac"],17); 
 
-
-$execute = ('sudo /var/www/html/wifijammer/wifijammer -a "'.$text.'"');
-exec($execute,$output);
-print_r ($output)."<br />";
-echo $execute;
-
+echo shell_exec('sudo /var/www/html/wifijammer/wifijammer -a "'.$mac_split[0].'"');
 
 	}
 }
