@@ -163,10 +163,10 @@ fclose($myfile);
 }
 
 
-for ($i = 0, $n = count($mac) ; $i < $n ; $i++)	
+for ($i = 0, $n = count($mac) ; $i < $n-1; $i++)	
 	{	 
-				
-		
+	
+			
     $findme = 'BSSID';
     $findme2 = 'Station MAC';
 
@@ -178,14 +178,15 @@ for ($i = 0, $n = count($mac) ; $i < $n ; $i++)
     {
       unset($mac[$i]);	
       array_splice( $mac , $i, 0, '<img src="images/dronecerca.png" title="Droni" width="50"><br><span style="color:#800000;text-align:center;">Possibili Droni</span>');
-
+      $save_i = $i;
 	} 
   else if($pos2 !== false)  
  { 
       unset($mac[$i]);	
       array_splice( $mac , $i, 0, '<img src="images/telecomando.png" title="Piloti" width="50"><br><span style="color:#800000;text-align:center;">Possibili Piloti</span>');
-
+      $save_i2 = $i;
 }
+
 
    ?>
 
@@ -194,6 +195,7 @@ for ($i = 0, $n = count($mac) ; $i < $n ; $i++)
 	<form method="post">
     
 <?php 	
+	
 	$mac_split = str_split($mac[$i],8); 
 	$return = $mac_split[0];
 		
@@ -205,7 +207,7 @@ for ($i = 0, $n = count($mac) ; $i < $n ; $i++)
 	   ?> 
  	 <tr> <td style="text-align: center;"><?php echo $mac[$i]; ?></td> 
  	 <?php
-	 	if($res["vendor"] !== null) 
+	 	if($res["vendor"] !== null ) 
  	 {
 	 	 if($drone[0] == 1){
 		 	?> 
@@ -236,14 +238,14 @@ for ($i = 0, $n = count($mac) ; $i < $n ; $i++)
 }
 else
 {
+	
 	?>
-	<tr> <td style="text-align: center;"><?php echo '<span style="color:#cc00cc;text-align:center;">Non rilevo il vendor!</span>'; ?></td></tr>
-    </tr>
-</table>
-    </form>
-<?php	
+		  	<tr> <td style="text-align: center;"><?php echo '<span style="color:#cc00cc;text-align:center;">Non rilevo il vendor!</span>'; ?></td></tr>
+<?php
+	
 	
 }
+
 
 }
 
