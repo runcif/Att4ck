@@ -3,6 +3,8 @@
 
 driver for aukey usb 5.0 ghz
 https://github.com/diederikdehaas/rtl8812AU
+or https://alexatnet.com/using-rtl8812-wi-fi-adapter-with-raspberry-pi/
+
 
 grep mac 
 ifconfig eth0 | grep -Eo '([[:xdigit:]]{1,2}[:-]){5}[[:xdigit:]]{1,2}' | head -n1
