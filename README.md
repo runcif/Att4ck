@@ -6,7 +6,7 @@ https://github.com/diederikdehaas/rtl8812AU
 or https://alexatnet.com/using-rtl8812-wi-fi-adapter-with-raspberry-pi/
 
 ricordati all'errore del make di installare: sudo apt-get install raspberrypi-kernel-headers
-
+---> https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=73005
 
 grep mac 
 ifconfig eth0 | grep -Eo '([[:xdigit:]]{1,2}[:-]){5}[[:xdigit:]]{1,2}' | head -n1
