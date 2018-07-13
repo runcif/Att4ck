@@ -1,5 +1,6 @@
 # Att4ck
 
+_______________________________________________________________________
 
 driver for aukey usb 5.0 ghz
 https://github.com/diederikdehaas/rtl8812AU
@@ -8,6 +9,9 @@ or https://alexatnet.com/using-rtl8812-wi-fi-adapter-with-raspberry-pi/
 ricordati all'errore del make di installare: sudo apt-get install raspberrypi-kernel-headers
 ---> https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=73005
 --->https://www.debinux.de/2014/06/sitecom-wifi-usb-adapter-ac1200-treiber-dkms-einrichtung-unter-ubuntu/
+
+_______________________________________________________________________
+
 grep mac 
 ifconfig eth0 | grep -Eo '([[:xdigit:]]{1,2}[:-]){5}[[:xdigit:]]{1,2}' | head -n1
 
